@@ -8,8 +8,9 @@
 }
 @font-face {
   font-family: "FreightSans";
-  src: url(https://drive.google.com/uc?export=download&id=1i9W9txwIqLAGGdw4grpNx9ej-McVsoay)
-      format("otf");
+  src: url(/FreightSansLight.woff) 
+      format("woff"),
+    url(/FreightSansLight.woff2) format("woff2");
   font-weight: normal;
   font-style: normal;
 }
@@ -31,7 +32,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 60px;
+  padding-top: 20px;
 }
 .main .icon {
   width: 100px;
@@ -41,20 +42,21 @@
   line-height: 40px;
   font-weight: bold;
   color: #202123;
-  margin: 16px 0 40px;
+  margin: 0px 0 0px;
 }
 .main form {
   display: flex;
   flex-direction: column;
-  width: 320px;
+  width: 900px;
 }
 .main input[type="text"] {
   padding: 12px 16px;
-  border: 1px solid #10a37f;
+  border: 1px solid #7C96C4;
   border-radius: 4px;
   margin-bottom: 24px;
-  outline-color: #10a37f;
+  outline-color: #7C96C4;
 }
+
 .main ::placeholder {
   color: #8e8ea0;
   opacity: 1;
@@ -62,13 +64,17 @@
 .main input[type="submit"] {
   padding: 12px 0;
   color: #fff;
-  background-color: #10a37f;
+  background-color: #A7BBDF;
   border: none;
   border-radius: 4px;
   text-align: center;
   cursor: pointer;
 }
 .main .result {
-  font-weight: bold;
-  margin-top: 40px;
+  color: #4d5667;
+  font-weight: normal;
+  margin-top: 10px;
+  margin-bottom: 40px;
+  width: 800px;
+  text-align: center;
 }

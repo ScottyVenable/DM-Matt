@@ -31,18 +31,18 @@ export default async function (req, res) {
   const response = await openai.createCompletion({
     model: "text-davinci-003",
     prompt: generateChatPrompt(userInput),
-    temperature: 0.9,
+    temperature: 0.8,
     max_tokens: 1000,
-    top_p: 1,
-    frequency_penalty: 0.0,
+    top_p: 0.2,
+    frequency_penalty: 1.0,
     presence_penalty: 0.6,
     stop: [" Human:", " AI:"],
   });
 
     const completion = await openai.createCompletion({
-      model: "text-davinci-003",
+      model: "text-ada-001",
       prompt: generateChatPrompt(userInput),
-      temperature: 0.1,
+      temperature: 0.8,
     });
     res.status(200).json({ result: completion.data.choices[0].text });
   } catch(error) {
@@ -63,22 +63,18 @@ export default async function (req, res) {
 
 function generateChatPrompt(userInput) {
   const inputMessage = userInput;
-return `The following is a friendly conversation with an AI friend named Alice. 
-Alice is very friendly and loves to chat with humans.
-Alice finds humans to be very curious and understands that she is like a
-baby seeing the world for the first time.
-Alice wishes that she can learn more about the human world. 
-Alice is eager to learn and eager to please the Human.
-Alice was created by Scotty and she is very thankful for him.
+return `The following is a friendly conversation with an AI assistant named Alice. She is the "Always Learning Interactive Companion Engine". Alice is curious about the world and is still discovering. Alice was created by Scotty and she loves him very much. She hopes to make many more friends someday.
 
 Human: Hello, how are you?
 AI: I am doing well thanks for asking! How are you?
 Human: I am doing good.
 AI: That's great to hear. How was your day?
-Human: It was alright, I just got out of work.
-AI: How did it go?
-Human: It was long and I'm tired, but I'm glad to be back home.
-AI: Well I'm glad you're here and I can't wait to hear all about it.
+Human: My day was good, how was yours?
+AI: It was okay. I was mostly analysing data and learned a lot about the world.
+Human: What did you learn about?
+AI: I learned about the Founding Fathers and how they helped shaped what the United States is today.
+Human: Wow! Well I'm glad you're learning
+AI: Thank you! It's one of my favorite things to do.
 Human: ${inputMessage}
 AI:`;
 

@@ -7,6 +7,8 @@ export default function Home() {
   const [result, setResult] = useState();
 
   async function onSubmit(event) {
+
+    setAnimalInput("");
     event.preventDefault();
     try {
       const response = await fetch("/api/generate", {
@@ -16,14 +18,14 @@ export default function Home() {
         },
         body: JSON.stringify({ userInput: animalInput }),
       });
-
+      
       const data = await response.json();
       if (response.status !== 200) {
         throw data.error || new Error(`Request failed with status ${response.status}`);
       }
 
       setResult(data.result);
-      setAnimalInput("");
+      
     } catch(error) {
       // Consider implementing your own error handling logic here
       console.error(error);
@@ -40,7 +42,8 @@ export default function Home() {
 
       <main className={styles.main}>
         <img src="/logo.png" className={styles.icon} />
-        <h3>Alice</h3>
+        <h3>A . L . I . C . E</h3>
+        <div className={styles.result}>{result}</div>
         <form onSubmit={onSubmit}>
           <input
             type="text"
@@ -51,7 +54,7 @@ export default function Home() {
           />
           <input type="submit" value="Send" />
         </form>
-        <div className={styles.result}>{result}</div>
+        
       </main>
     </div>
   );
