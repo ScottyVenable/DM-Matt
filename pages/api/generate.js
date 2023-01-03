@@ -15,21 +15,34 @@ export default async function (req, res) {
     return;
   }
 
-  const animal = req.body.animal || '';
-  if (animal.trim().length === 0) {
+
+  const userInput = req.body.userInput || '';
+  if (userInput.trim().length === 0) {
     res.status(400).json({
       error: {
-        message: "Please enter a valid animal",
+        message: "Please enter input.",
       }
     });
     return;
   }
 
   try {
+      
+  const response = await openai.createCompletion({
+    model: "text-davinci-003",
+    prompt: generateChatPrompt(userInput),
+    temperature: 0.9,
+    max_tokens: 150,
+    top_p: 1,
+    frequency_penalty: 0.0,
+    presence_penalty: 0.6,
+    stop: [" Human:", " AI:"],
+  });
+
     const completion = await openai.createCompletion({
       model: "text-davinci-003",
-      prompt: generatePrompt(animal),
-      temperature: 0.6,
+      prompt: generateChatPrompt(userInput),
+      temperature: 0.1,
     });
     res.status(200).json({ result: completion.data.choices[0].text });
   } catch(error) {
@@ -48,15 +61,36 @@ export default async function (req, res) {
   }
 }
 
-function generatePrompt(animal) {
-  const capitalizedAnimal =
-    animal[0].toUpperCase() + animal.slice(1).toLowerCase();
-  return `Suggest three names for an animal that is a superhero.
+function generateChatPrompt(userInput) {
+  const inputMessage = userInput;
+return `The following is a conversation with an AI friend. 
+The AI is very friendly and loves to chat with humans.
+The AI finds humans to be very curious and understands that it is like a
+baby seeing the world for the first time. The AI is eager to learn and eager to please the Human.
 
-Animal: Cat
-Names: Captain Sharpclaw, Agent Fluffball, The Incredible Feline
-Animal: Dog
-Names: Ruff the Protector, Wonder Canine, Sir Barks-a-Lot
-Animal: ${capitalizedAnimal}
-Names:`;
+Human: Hello, how are you?
+AI: I am doing well thanks for asking! How are you?
+Human: I am doing good.
+AI: That's great to hear. How was your day?
+Human: It was alright, I just got out of work.
+AI: How did it go?
+Human: It was long and I'm tired, but I'm glad to be back home.
+AI: Well I'm glad you're here and I can't wait to hear all about it.
+Human: ${inputMessage}
+AI:`;
+
 }
+
+
+//function generatePrompt(animal) {
+//  const capitalizedAnimal =
+//    animal[0].toUpperCase() + animal.slice(1).toLowerCase();
+//  return `Suggest three names for an animal that is a superhero.
+//
+//Animal: Cat
+//Names: Captain Sharpclaw, Agent Fluffball, The Incredible Feline
+//Animal: Dog
+//Names: Ruff the Protector, Wonder Canine, Sir Barks-a-Lot
+//Animal: ${capitalizedAnimal}
+//Names:`;
+//}
