@@ -7,6 +7,13 @@
   font-style: normal;
 }
 @font-face {
+  font-family: "FreightSans";
+  src: url(https://drive.google.com/uc?export=download&id=1i9W9txwIqLAGGdw4grpNx9ej-McVsoay)
+      format("otf");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
   font-family: "ColfaxAI";
   src: url(https://cdn.openai.com/API/fonts/ColfaxAIBold.woff2) format("woff2"),
     url(https://cdn.openai.com/API/fonts/ColfaxAIBold.woff) format("woff");
@@ -18,7 +25,7 @@
   font-size: 16px;
   line-height: 24px;
   color: #353740;
-  font-family: "ColfaxAI", Helvetica, sans-serif;
+  font-family: "FreightSans", Helvetica, sans-serif;
 }
 .main {
   display: flex;
@@ -27,7 +34,7 @@
   padding-top: 60px;
 }
 .main .icon {
-  width: 34px;
+  width: 100px;
 }
 .main h3 {
   font-size: 32px;
