@@ -5,9 +5,7 @@ const configuration = new Configuration({
 });
 const openai = new OpenAIApi(configuration);
 
-var personalityCurrentEmotion = "Happy"
-
-export default async function (req, res) {
+export async function Emotion (req, res) {
     //Check if API Key is working
     if (!configuration.apiKey) {
       res.status(500).json({
@@ -32,16 +30,18 @@ export default async function (req, res) {
   
     try {
   
+      /*
     const response = await openai.createCompletion({
       model: "text-davinci-003",
-      prompt: generatePersonalityPrompt(userInput),
+      prompt: generateCurrentEmotion(userInput),
       temperature: 0.8,
-      max_tokens: 200,
+      max_tokens: 20,
       top_p: 0.2,
       frequency_penalty: 0.5,
       presence_penalty: 0.6,
-      stop: [" Human:", " AI:"],
+      stop: ["Emotion:"],
     });
+    */
   
       //Generate an emotion based on the most recent message recieved.
       const completion = await openai.createCompletion({
@@ -80,7 +80,10 @@ export default async function (req, res) {
 
 function generateCurrentEmotion(userInput) {
     const inputMessage = userInput;
-    return `Generate a one word emotion based on how someone would feel if they read this message:
-    Message: "${inputMessage}"
+    return `
+    Connect the relationship and the message to generate a one word emotion based on how someone would feel if they read this message from a Sender:
+
+    Relationship to Sender: Friend
+    Message: ${inputMessage}
     Emotion:`
   }

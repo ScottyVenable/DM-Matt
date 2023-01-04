@@ -37,8 +37,8 @@ export default async function (req, res) {
   const response = await openai.createCompletion({
     model: "text-davinci-003",
     prompt: generatePersonalityPrompt(userInput),
-    temperature: 0.8,
-    max_tokens: 200,
+    temperature: 0.6,
+    max_tokens: 100,
     frequency_penalty: 0.5,
     presence_penalty: 0.6,
     stop: [" Human:", " AI:"],
@@ -50,8 +50,8 @@ export default async function (req, res) {
     const completion = await openai.createCompletion({
       model: "text-davinci-003",
       prompt: generatePersonalityPrompt(userInput),
-      temperature: 0.8,
-      max_tokens: 200,
+      temperature: 0.6,
+      max_tokens: 100,
       frequency_penalty: 0.5,
       presence_penalty: 0.6,
       stop: [" Human:", " AI:"],
@@ -89,12 +89,14 @@ function generatePersonalityPrompt(userInput) {
   const personalityInterests = Interests;
   const personalityCurrentEmotion = CurrentEmotion;
   const memoryKnowledge = PersonalKnowledge;
-return `Below is some information about an AI assistant named Alice:
+return `Below is some information for an assistant named Alice:
 
 Alice's Personality Traits: ${personalityTraits}
 Alice's Interests: ${personalityInterests}
 Alice's Current Emotion: ${personalityCurrentEmotion}
 What Alice Knows: ${memoryKnowledge}
+
+Using this knowledge, get to know your new human friend! Below is a conversation with a human
 
 Human: ${inputMessage}
 AI:`;

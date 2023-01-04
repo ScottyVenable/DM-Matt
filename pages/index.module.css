@@ -44,6 +44,14 @@
   color: #202123;
   margin: 0px 0 0px;
 }
+.main h4 {
+  font-size: 16px;
+  line-height: 40px;
+  font-weight: bold;
+  color: #5e77a9;
+  margin: 0px 0 0px;
+}
+
 .main form {
   display: flex;
   flex-direction: column;
@@ -70,6 +78,7 @@
   text-align: center;
   cursor: pointer;
 }
+
 .main .result {
   color: #4d5667;
   font-weight: normal;

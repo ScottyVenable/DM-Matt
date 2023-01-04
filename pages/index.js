@@ -1,16 +1,17 @@
 import Head from "next/head";
 import { useState } from "react";
 import styles from "./index.module.css";
-
+import { Emotion } from "./api/emotion";
 export default function Home() {
   const [humanInput, setHumanInput] = useState("");
   const [result, setResult] = useState();
   const [emotion, setEmotion] = useState();
-
+  //Generate Response to the input
   async function onSubmit(event) {
     
     setHumanInput("");
     event.preventDefault();
+
 
     //Create AI Response
     try {
@@ -25,44 +26,20 @@ export default function Home() {
       
       const data = await response.json();
       if (response.status !== 200) {
-        throw data.error || new Error(`Request failed with status ${AIresponse.status}`);
+        throw data.error || new Error(`Request failed with status ${response.status}`);
       }
 
       setResult(data.result);
 
 
-    } catch(error) {
+    } 
+    catch(error) {
       // Consider implementing your own error handling logic here
       console.error(error);
       alert(error.message);
     }
 
-    //Set Emotion
-    /*
-    try {
-
-      const emotionResponse = await fetch("/api/generate", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ userInput: humanInput }),
-      });
-      
-      
-      const emotionalData = await AIresponse.json();
-      if (AIresponse.status !== 200) {
-        throw emotionalData.error || new Error(`Request failed with status ${AIresponse.status}`);
-      }
-
-      setEmotion(emotionalData.result);
-    
-
-    }
-    */
   } 
-
-  //Site Design
   return (
     <div>
       <Head>
@@ -73,6 +50,7 @@ export default function Home() {
       <main className={styles.main}>
         <img src="/logo.png" className={styles.icon} />
         <h3>A . L . I . C . E</h3>
+        <h4>Emotion: {emotion}</h4>
         <div className={styles.result}>{result}</div>
         <form onSubmit={onSubmit}>
           <input
@@ -84,8 +62,37 @@ export default function Home() {
           />
           <input type="submit" value="Send" />
         </form>
-        
       </main>
     </div>
   );
+
+  //Generate an Emotion based on the input recieved.
+  async function generateEmotion(event) {
+
+    try {
+      const response = await fetch("/api/emotion", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ userInput: humanInput }),
+      });
+      
+      const data = await response.json();
+      if (response.status !== 200) {
+        throw data.error || new Error(`Request failed with status ${response.status}`);
+      }
+
+      setEmotion(data.result);
+
+
+    } 
+    catch(error) {
+      // Consider implementing your own error handling logic here
+      console.error(error);
+      alert(error.message);
+    }
+  }
+  //Site Design
+
 }
