@@ -39,7 +39,6 @@ export default async function (req, res) {
     prompt: generatePersonalityPrompt(userInput),
     temperature: 0.8,
     max_tokens: 200,
-    top_p: 0.2,
     frequency_penalty: 0.5,
     presence_penalty: 0.6,
     stop: [" Human:", " AI:"],
@@ -52,10 +51,10 @@ export default async function (req, res) {
       model: "text-davinci-003",
       prompt: generatePersonalityPrompt(userInput),
       temperature: 0.8,
-      top_p: 0.2,
       max_tokens: 200,
       frequency_penalty: 0.5,
       presence_penalty: 0.6,
+      stop: [" Human:", " AI:"],
     });
     res.status(200).json({ result: completion.data.choices[0].text });
 

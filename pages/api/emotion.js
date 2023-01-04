@@ -32,7 +32,7 @@ export default async function (req, res) {
   
     try {
   
-    const emotion = await openai.createCompletion({
+    const response = await openai.createCompletion({
       model: "text-davinci-003",
       prompt: generatePersonalityPrompt(userInput),
       temperature: 0.8,
@@ -46,9 +46,8 @@ export default async function (req, res) {
       //Generate an emotion based on the most recent message recieved.
       const completion = await openai.createCompletion({
         model: "text-davinci-003",
-        prompt: generatePersonalityPrompt(userInput),
-        temperature: 0.8,
-        top_p: 0.2,
+        prompt: generateCurrentEmotion(userInput),
+        top_p: 0.1,
         max_tokens: 200,
         frequency_penalty: 0.5,
         presence_penalty: 0.6,

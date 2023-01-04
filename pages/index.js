@@ -14,7 +14,7 @@ export default function Home() {
 
     //Create AI Response
     try {
-      const AIresponse = await fetch("/api/generate", {
+      const response = await fetch("/api/generate", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -23,12 +23,12 @@ export default function Home() {
       });
       
       
-      const AIdata = await AIresponse.json();
-      if (AIresponse.status !== 200) {
-        throw AIdata.error || new Error(`Request failed with status ${AIresponse.status}`);
+      const data = await response.json();
+      if (response.status !== 200) {
+        throw data.error || new Error(`Request failed with status ${AIresponse.status}`);
       }
 
-      setResult(AIdata.result);
+      setResult(data.result);
 
 
     } catch(error) {
