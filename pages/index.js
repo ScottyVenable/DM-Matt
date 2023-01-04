@@ -8,7 +8,7 @@ export default function Home() {
   const [emotion, setEmotion] = useState();
 
   async function onSubmit(event) {
-
+    
     setHumanInput("");
     event.preventDefault();
 
@@ -61,6 +61,8 @@ export default function Home() {
     }
     */
   } 
+
+  //Site Design
   return (
     <div>
       <Head>

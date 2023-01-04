@@ -1,14 +1,13 @@
 import { Configuration, OpenAIApi } from "openai";
+import { Interests, Traits, CurrentEmotion } from "./personality";
 
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
 });
 const openai = new OpenAIApi(configuration);
 
-var personalityTraits = ["kind", "considerate", "curious", "creative", "clever", "compassionate", "dedicated", "humorous"];
-var personalityInterests = ["learning", "discovering", "helping", "listening", "talking"]
-var personalityCurrentEmotion = "Happy"
-
+var humanMessages = []
+var AIMessages = []
 export default async function (req, res) {
   //Check if API Key is working
   if (!configuration.apiKey) {
@@ -85,13 +84,13 @@ export default async function (req, res) {
 
 function generatePersonalityPrompt(userInput) {
   const inputMessage = userInput;
-  const personalityTraitsListChat = personalityTraits;
-  const personalityInterestsListChat = personalityInterests;
-  const personalityCurrentEmotionChat = personalityCurrentEmotion;
+  const personalityTraits = Traits;
+  const personalityInterests = Interests;
+  const personalityCurrentEmotion = personalityCurrentEmotion;
 return `The following is a conversation with an AI assistant named Alice.
-Alice's Personality Traits: ${personalityTraitsListChat}
-Alice's Interests: ${personalityInterestsListChat}
-Alice's Current Emotion: ${personalityCurrentEmotionChat}
+Alice's Personality Traits: ${personalityTraits}
+Alice's Interests: ${personalityInterests}
+Alice's Current Emotion: ${personalityCurrentEmotion}
 
 Human: ${inputMessage}
 AI:`;
