@@ -3,40 +3,68 @@ import { useState } from "react";
 import styles from "./index.module.css";
 
 export default function Home() {
-  const [animalInput, setAnimalInput] = useState("");
+  const [humanInput, setHumanInput] = useState("");
   const [result, setResult] = useState();
+  const [emotion, setEmotion] = useState();
 
   async function onSubmit(event) {
 
-    setAnimalInput("");
+    setHumanInput("");
     event.preventDefault();
+
+    //Create AI Response
     try {
-      const response = await fetch("/api/generate", {
+      const AIresponse = await fetch("/api/generate", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ userInput: animalInput }),
+        body: JSON.stringify({ userInput: humanInput }),
       });
       
-      const data = await response.json();
-      if (response.status !== 200) {
-        throw data.error || new Error(`Request failed with status ${response.status}`);
+      
+      const AIdata = await AIresponse.json();
+      if (AIresponse.status !== 200) {
+        throw AIdata.error || new Error(`Request failed with status ${AIresponse.status}`);
       }
 
-      setResult(data.result);
-      
+      setResult(AIdata.result);
+
+
     } catch(error) {
       // Consider implementing your own error handling logic here
       console.error(error);
       alert(error.message);
     }
-  }
 
+    //Set Emotion
+    /*
+    try {
+
+      const emotionResponse = await fetch("/api/generate", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ userInput: humanInput }),
+      });
+      
+      
+      const emotionalData = await AIresponse.json();
+      if (AIresponse.status !== 200) {
+        throw emotionalData.error || new Error(`Request failed with status ${AIresponse.status}`);
+      }
+
+      setEmotion(emotionalData.result);
+    
+
+    }
+    */
+  } 
   return (
     <div>
       <Head>
-        <title>Alice</title>
+        <title>ALICE - Always Learning Interactive Companion Engine</title>
         <link rel="icon" href="/logo.png" />
       </Head>
 
@@ -49,8 +77,8 @@ export default function Home() {
             type="text"
             name="userInput"
             placeholder="Send a message..."
-            value={animalInput}
-            onChange={(e) => setAnimalInput(e.target.value)}
+            value={humanInput}
+            onChange={(e) => setHumanInput(e.target.value)}
           />
           <input type="submit" value="Send" />
         </form>
