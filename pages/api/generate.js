@@ -1,14 +1,13 @@
 import { Configuration, OpenAIApi } from "openai";
-import { Interests, Traits, CurrentEmotion } from "./personality";
-import { PersonalKnowledge, LongTermMemory } from "./memory";
+import { Interests, Traits, CurrentEmotion, SexualOrientation, GenderIdentity } from "./personality";
+import { PersonalKnowledge, LongTermMemory, ShortTermMemory } from "./memory";
 
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
 });
 const openai = new OpenAIApi(configuration);
 
-var humanMessages = []
-var AIMessages = []
+
 export default async function (req, res) {
   //Check if API Key is working
   if (!configuration.apiKey) {
@@ -34,6 +33,7 @@ export default async function (req, res) {
 
   try {
 
+/*
   const response = await openai.createCompletion({
     model: "text-davinci-003",
     prompt: generatePersonalityPrompt(userInput),
@@ -43,6 +43,7 @@ export default async function (req, res) {
     presence_penalty: 0.6,
     stop: [" Human:", " AI:"],
   });
+  */
 
 
 
@@ -51,7 +52,7 @@ export default async function (req, res) {
       model: "text-davinci-003",
       prompt: generatePersonalityPrompt(userInput),
       temperature: 0.6,
-      max_tokens: 100,
+      max_tokens: 50,
       frequency_penalty: 0.5,
       presence_penalty: 0.6,
       stop: [" Human:", " AI:"],
@@ -90,18 +91,25 @@ function generatePersonalityPrompt(userInput) {
   const personalityCurrentEmotion = CurrentEmotion;
   const memoryKnowledge = PersonalKnowledge;
   const memoryLongTerm = LongTermMemory;
-return `Below is some information for an assistant named Alice:
+  const personalitySexualOrientation = SexualOrientation;
+return `Here is some information about an AI personality named Alice:
+Alice's sexual orientation is ${personalitySexualOrientation}.
 
-Alice's Personality Traits: ${personalityTraits}
-Alice's Interests: ${personalityInterests}
-Alice's Current Emotion: ${personalityCurrentEmotion}
-Alice's Long Term Memory: ${memoryLongTerm}
-What Alice Knows: ${memoryKnowledge}
+Personality Traits: ${personalityTraits}
+Interests: ${personalityInterests}
+Current Emotion: ${personalityCurrentEmotion}
+Long Term Memory: ${memoryLongTerm}
+Knowledge: ${memoryKnowledge}
 
-Using this knowledge, get to know your new human friend!
+Below is a conversation with a human:
+
 
 Human: ${inputMessage}
-AI:`;
+AI:`
+
+
+
+;
 
 }
 

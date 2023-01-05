@@ -1,14 +1,13 @@
 import Head from "next/head";
 import { useState } from "react";
 import styles from "./index.module.css";
-import { Emotion } from "./api/emotion";
+import { Conversation, ShortTermMemory } from "./api/memory";
 export default function Home() {
   const [humanInput, setHumanInput] = useState("");
   const [result, setResult] = useState();
   const [emotion, setEmotion] = useState();
   //Generate Response to the input
   async function onSubmit(event) {
-    
     setHumanInput("");
     event.preventDefault();
 
@@ -31,8 +30,7 @@ export default function Home() {
 
       setResult(data.result);
 
-
-    } 
+    }
     catch(error) {
       // Consider implementing your own error handling logic here
       console.error(error);
@@ -43,7 +41,7 @@ export default function Home() {
   return (
     <div>
       <Head>
-        <title>ALICE - Always Learning Interactive Companion Engine</title>
+        <title>Alice AI - Always Learning Interactive Companion Engine</title>
         <link rel="icon" href="/logo.png" />
       </Head>
 
@@ -51,7 +49,14 @@ export default function Home() {
         <img src="/logo.png" className={styles.icon} />
         <h3>A . L . I . C . E</h3>
         <h4>Always Learning Interactive Companion Engine</h4>
-        <div className={styles.result}>{result}</div>
+        <fieldset>
+          <legend>"Messages</legend>
+          <div className={styles.result}><b>You:</b>{result}</div>
+          <div className={styles.result}><b>Alice:</b>{result}</div>
+
+        </fieldset>
+
+
         <form onSubmit={onSubmit}>
           <input
             type="text"
@@ -75,7 +80,7 @@ export default function Home() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ userInput: humanInput }),
+        body: JSON.stringify({ userInput: emotion }),
       });
       
       const data = await response.json();
