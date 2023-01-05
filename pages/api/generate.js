@@ -102,10 +102,9 @@ Alice's Current Emotion: ${personalityCurrentEmotion}
 Message from Sender: ${inputMessage}
 
 Connecting the provided relationship, current emotion, and message, generate a brief sentence 
-showing what Alice's thought process would be like if they read that message.
+responding to the message from sender.
 
-
-Thought:`
+AI:`
 
 
 ;

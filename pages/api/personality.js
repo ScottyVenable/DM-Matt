@@ -1,7 +1,7 @@
 import { generatedEmotion } from "..";
 import {emotion, Emotion} from "./emotion";
 
-export var CurrentEmotion = "suspicious";
+export var CurrentEmotion = "content";
 export var Traits = [
     "kind", 
     "considerate", 
