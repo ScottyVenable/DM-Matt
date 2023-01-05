@@ -50,7 +50,7 @@ export default function Home() {
       <main className={styles.main}>
         <img src="/logo.png" className={styles.icon} />
         <h3>A . L . I . C . E</h3>
-        <h4>Emotion: {emotion}</h4>
+        <h4>Always Learning Interactive Companion Engine</h4>
         <div className={styles.result}>{result}</div>
         <form onSubmit={onSubmit}>
           <input

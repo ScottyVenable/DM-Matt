@@ -1,6 +1,6 @@
 import { Configuration, OpenAIApi } from "openai";
 import { Interests, Traits, CurrentEmotion } from "./personality";
-import { PersonalKnowledge } from "./memory";
+import { PersonalKnowledge, LongTermMemory } from "./memory";
 
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
@@ -89,14 +89,16 @@ function generatePersonalityPrompt(userInput) {
   const personalityInterests = Interests;
   const personalityCurrentEmotion = CurrentEmotion;
   const memoryKnowledge = PersonalKnowledge;
+  const memoryLongTerm = LongTermMemory;
 return `Below is some information for an assistant named Alice:
 
 Alice's Personality Traits: ${personalityTraits}
 Alice's Interests: ${personalityInterests}
 Alice's Current Emotion: ${personalityCurrentEmotion}
+Alice's Long Term Memory: ${memoryLongTerm}
 What Alice Knows: ${memoryKnowledge}
 
-Using this knowledge, get to know your new human friend! Below is a conversation with a human
+Using this knowledge, get to know your new human friend!
 
 Human: ${inputMessage}
 AI:`;
