@@ -58,7 +58,6 @@
   line-height: 40px;
   font-weight: bold;
   color: #5e77a9;
-  margin: 0px 0 0px;
   letter-spacing: 5px;
   padding-bottom: 40px;
 }
@@ -68,7 +67,7 @@
   flex-direction: column;
   position:absolute;
   bottom: 20px;
-  width: 1000px;
+  width: 1200px;
   font-family: "FreightSans", Helvetica, sans-serif;
 }
 .main input[type="text"] {
