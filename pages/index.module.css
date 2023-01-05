@@ -91,14 +91,16 @@
 .main .result {
   color: #4d5667;
   font-weight: normal;
-  margin-top: 10px;
+  margin-top: 0px;
   margin-bottom: 10px;
-  width: 800px;
+  margin-left: 4px;
+  width: 900px;
   text-align: left;
   border: #5e77a9;
   border-radius: 4px;
   font-style: bold;
   letter-spacing: 1px;
+  font-family: "ColfaxAI", Helvetica, sans-serif;
 }
 
 .main .human {
@@ -114,14 +116,15 @@
   letter-spacing: 1px;
 }
 
-.main .fieldset {
+.main fieldset {
   margin: 8px;
   border: 1px solid silver;
   padding: 8px;    
   border-radius: 4px;
 }
 
-legend {
-  padding: 2px;    
+.main legend {
+  padding: 2px;
+  letter-spacing: 3px; 
 }
 

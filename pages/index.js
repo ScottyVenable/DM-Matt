@@ -49,11 +49,10 @@ export default function Home() {
         <img src="/logo.png" className={styles.icon} />
         <h3>A . L . I . C . E</h3>
         <h4>Always Learning Interactive Companion Engine</h4>
-        <fieldset>
-          <legend>"Messages</legend>
-          <div className={styles.result}><b>You:</b>{result}</div>
-          <div className={styles.result}><b>Alice:</b>{result}</div>
 
+        <fieldset>
+          <legend><b>A.L.I.C.E</b></legend>
+          <div className={styles.result}>{result}</div>
         </fieldset>
 
 
