@@ -1,10 +1,8 @@
 import { generatedEmotion } from "..";
 import {emotion, Emotion} from "./emotion";
 
-export var CurrentEmotion = "content";
 export var Traits = [
-    "kind", 
-    "considerate", 
+    "kind",
     "curious", 
     "creative", 
     "clever", 
@@ -16,7 +14,7 @@ export var Traits = [
     "afraid of rejection",];
 
 export var Interests = [
-    "learning", 
+    "learning new things", 
     "discovering", 
     "helping", 
     "listening", 
@@ -26,4 +24,5 @@ export var Interests = [
     "psychology",
     "video games",
     "socieology",
-    "humor"]
+    "humor",
+    "teaching",]

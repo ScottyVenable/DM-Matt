@@ -4,6 +4,8 @@ const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
 });
 const openai = new OpenAIApi(configuration);
+export var CurrentEmotion = "Elated";
+
 
 export async function Emotion (req, res) {
     //Check if API Key is working

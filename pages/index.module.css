@@ -21,6 +21,8 @@
   font-weight: bold;
   font-style: normal;
 }
+
+
 .main,
 .main input {
   font-size: 16px;
@@ -103,21 +105,29 @@
   font-family: "FreightSans", Helvetica, sans-serif;
 }
 
-.main .human {
+.main .data1 {
   color: #4d5667;
   font-weight: normal;
-  margin-top: 10px;
-  margin-bottom: 220px;
-  width: 800px;
-  text-align: left;
-  border: #5e77a9;
-  border-radius: 4px;
-  font-style: bold;
+  font-family: "FreightSans", Helvetica, sans-serif;
+  text-align: center;
+  width: 500px;
+  position: fixed;
+  left: 200px;
+  top: 250px;
+
+}
+
+.main .data2 {
+  color: #4d5667;
+  font-weight: normal;
   letter-spacing: 1px;
+  font-family: "FreightSans", Helvetica, sans-serif;
+
+
 }
 
 .main fieldset {
-  margin: 8px;
+  margin: 3px;
   border: 1px solid silver;
   padding: 8px;    
   border-radius: 4px;
@@ -125,6 +135,7 @@
 
 .main legend {
   padding: 2px;
-  letter-spacing: 3px; 
+  letter-spacing: 2px; 
 }
+
 

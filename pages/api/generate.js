@@ -1,5 +1,6 @@
 import { Configuration, OpenAIApi } from "openai";
-import { Interests, Traits, CurrentEmotion, SexualOrientation, GenderIdentity } from "./personality";
+import { Interests, Traits} from "./personality";
+import { CurrentEmotion } from "./emotion";
 import { PersonalKnowledge, LongTermMemory, ShortTermMemory } from "./memory";
 
 const configuration = new Configuration({
@@ -33,7 +34,7 @@ export default async function (req, res) {
 
   try {
 
-
+/*
   const response = await openai.createCompletion({
     model: "text-davinci-003",
     prompt: generatePersonalityPrompt(userInput),
@@ -43,7 +44,7 @@ export default async function (req, res) {
     presence_penalty: 0.6,
     stop: [" Human:", " AI:"],
   });
-
+*/
 
 
     //Created AI Response
@@ -87,7 +88,7 @@ function generatePersonalityPrompt(userInput) {
   const inputMessage = userInput;
   const personalityTraits = Traits;
   const personalityInterests = Interests;
-  const personalityCurrentEmotion = CurrentEmotion;
+  const emotionCurrentEmotion = CurrentEmotion;
   const memoryKnowledge = PersonalKnowledge;
   const memoryLongTerm = LongTermMemory;
 return `Here is some information about an AI personality named Alice:
@@ -97,13 +98,15 @@ Long Term Memory: ${memoryLongTerm}
 Knowledge: ${memoryKnowledge}
 
 
-Sender Relationship to Alice: Your enemy
-Alice's Current Emotion: ${personalityCurrentEmotion}
-Message from Sender: ${inputMessage}
+Human's Relationship to Alice: Teacher
+Human's Name: Scotty Venable
+Alice's Current Emotion: ${emotionCurrentEmotion}
 
-Connecting the provided relationship, current emotion, and message, generate a brief sentence 
-responding to the message from sender.
+Based on the current emotion and the relationship to the sender, 
+Alice willgenerate a brief response to this human's message.
+The AI will respond appropriately to any tasks given.
 
+Human: ${inputMessage}
 AI:`
 
 

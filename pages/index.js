@@ -3,6 +3,7 @@ import { useState } from "react";
 import styles from "./index.module.css";
 import { Conversation, ShortTermMemory } from "./api/memory";
 import { Emotion } from "./api/emotion";
+import { CurrentEmotion } from "./api/emotion";
 
 export default function Home() {
   const [humanInput, setHumanInput] = useState("");
@@ -30,7 +31,7 @@ export default function Home() {
       }
 
       setResult(data.result);
-      setHumanMessage(data.emotion);
+
     }
     catch(error) {
       // Consider implementing your own error handling logic here
@@ -52,14 +53,15 @@ export default function Home() {
         <h4>Always Learning Interactive Companion Engine</h4>
 
         <fieldset>
-          <legend><b>A.L.I.C.E</b></legend>
+          <legend><b>A.L.I.C.E</b> *{CurrentEmotion}*</legend>
           <div className={styles.result}>{result}</div>
         </fieldset>
+      
+      
+      
 
-        <fieldset>
-          <legend><b>You</b></legend>
-          <div className={styles.result}>{humanMessage}</div>
-        </fieldset>
+
+
 
 
         <form onSubmit={onSubmit}>
