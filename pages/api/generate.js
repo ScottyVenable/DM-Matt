@@ -33,7 +33,7 @@ export default async function (req, res) {
 
   try {
 
-/*
+
   const response = await openai.createCompletion({
     model: "text-davinci-003",
     prompt: generatePersonalityPrompt(userInput),
@@ -43,7 +43,6 @@ export default async function (req, res) {
     presence_penalty: 0.6,
     stop: [" Human:", " AI:"],
   });
-  */
 
 
 
@@ -51,8 +50,8 @@ export default async function (req, res) {
     const completion = await openai.createCompletion({
       model: "text-davinci-003",
       prompt: generatePersonalityPrompt(userInput),
-      temperature: 0.6,
-      max_tokens: 50,
+      temperature: 0.7,
+      max_tokens: 100,
       frequency_penalty: 0.5,
       presence_penalty: 0.6,
       stop: [" Human:", " AI:"],
@@ -91,22 +90,22 @@ function generatePersonalityPrompt(userInput) {
   const personalityCurrentEmotion = CurrentEmotion;
   const memoryKnowledge = PersonalKnowledge;
   const memoryLongTerm = LongTermMemory;
-  const personalitySexualOrientation = SexualOrientation;
 return `Here is some information about an AI personality named Alice:
-Alice's sexual orientation is ${personalitySexualOrientation}.
-
 Personality Traits: ${personalityTraits}
 Interests: ${personalityInterests}
-Current Emotion: ${personalityCurrentEmotion}
 Long Term Memory: ${memoryLongTerm}
 Knowledge: ${memoryKnowledge}
 
-Below is a conversation with a human:
+
+Sender Relationship to Alice: Your enemy
+Alice's Current Emotion: ${personalityCurrentEmotion}
+Message from Sender: ${inputMessage}
+
+Connecting the provided relationship, current emotion, and message, generate a brief sentence 
+showing what Alice's thought process would be like if they read that message.
 
 
-Human: ${inputMessage}
-AI:`
-
+Thought:`
 
 
 ;

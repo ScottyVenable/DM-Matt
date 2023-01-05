@@ -2,16 +2,17 @@ import Head from "next/head";
 import { useState } from "react";
 import styles from "./index.module.css";
 import { Conversation, ShortTermMemory } from "./api/memory";
+import { Emotion } from "./api/emotion";
+
 export default function Home() {
   const [humanInput, setHumanInput] = useState("");
   const [result, setResult] = useState();
   const [emotion, setEmotion] = useState();
+  const [humanMessage, setHumanMessage] = useState();
   //Generate Response to the input
   async function onSubmit(event) {
     setHumanInput("");
     event.preventDefault();
-
-
     //Create AI Response
     try {
       const response = await fetch("/api/generate", {
@@ -29,7 +30,7 @@ export default function Home() {
       }
 
       setResult(data.result);
-
+      setHumanMessage(data.emotion);
     }
     catch(error) {
       // Consider implementing your own error handling logic here
@@ -55,6 +56,11 @@ export default function Home() {
           <div className={styles.result}>{result}</div>
         </fieldset>
 
+        <fieldset>
+          <legend><b>You</b></legend>
+          <div className={styles.result}>{humanMessage}</div>
+        </fieldset>
+
 
         <form onSubmit={onSubmit}>
           <input
@@ -71,32 +77,7 @@ export default function Home() {
   );
 
   //Generate an Emotion based on the input recieved.
-  async function generateEmotion(event) {
 
-    try {
-      const response = await fetch("/api/emotion", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ userInput: emotion }),
-      });
-      
-      const data = await response.json();
-      if (response.status !== 200) {
-        throw data.error || new Error(`Request failed with status ${response.status}`);
-      }
-
-      setEmotion(data.result);
-
-
-    } 
-    catch(error) {
-      // Consider implementing your own error handling logic here
-      console.error(error);
-      alert(error.message);
-    }
-  }
   //Site Design
 
 }

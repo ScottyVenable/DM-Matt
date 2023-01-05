@@ -27,6 +27,7 @@
   line-height: 24px;
   color: #353740;
   font-family: "FreightSans", Helvetica, sans-serif;
+  letter-spacing: 1px;
 }
 .main {
   display: flex;
@@ -35,10 +36,11 @@
   padding-top: 0px;
 }
 .main .icon {
-  width: 150px;
-  opacity: 0.2;
+  width: 400px;
+  opacity: 0.05;
   position:absolute;
     z-index:0;
+    top: -90px;
 }
 .main h3 {
   font-size: 50px;
@@ -65,6 +67,7 @@
   position:absolute;
   bottom: 20px;
   width: 1000px;
+  font-family: "FreightSans", Helvetica, sans-serif;
 }
 .main input[type="text"] {
   padding: 12px 16px;
@@ -86,6 +89,7 @@
   border-radius: 4px;
   text-align: center;
   cursor: pointer;
+  letter-spacing: 3px;
 }
 
 .main .result {
@@ -95,12 +99,8 @@
   margin-bottom: 10px;
   margin-left: 4px;
   width: 900px;
-  text-align: left;
-  border: #5e77a9;
-  border-radius: 4px;
-  font-style: bold;
   letter-spacing: 1px;
-  font-family: "ColfaxAI", Helvetica, sans-serif;
+  font-family: "FreightSans", Helvetica, sans-serif;
 }
 
 .main .human {
