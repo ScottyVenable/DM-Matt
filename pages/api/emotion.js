@@ -4,7 +4,8 @@ const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
 });
 const openai = new OpenAIApi(configuration);
-export var CurrentEmotion = "Elated";
+
+export var CurrentEmotion = "Happy";
 
 
 export async function Emotion (req, res) {

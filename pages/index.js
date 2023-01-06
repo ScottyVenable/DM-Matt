@@ -1,19 +1,40 @@
 import Head from "next/head";
 import { useState } from "react";
 import styles from "./index.module.css";
-import { Conversation, ShortTermMemory } from "./api/memory";
-import { Emotion } from "./api/emotion";
 import { CurrentEmotion } from "./api/emotion";
 
 export default function Home() {
   const [humanInput, setHumanInput] = useState("");
   const [result, setResult] = useState();
-  const [emotion, setEmotion] = useState();
-  const [humanMessage, setHumanMessage] = useState();
+  const [consoleInput, setConsoleInput] = useState("");
+
+ // const [emotion, setEmotion] = useState();
+ // const [humanMessage, setHumanMessage] = useState();
+
+
+ function devConsole(devEvent) {
+  devEvent.preventDefault();
+  setConsoleInput("");
+
+  try{
+
+    console.log("The button works.")
+
+  }
+  catch(error){
+    console.error(error);
+    alert(error.message);
+  }
+
+}
+
+
   //Generate Response to the input
   async function onSubmit(event) {
     setHumanInput("");
     event.preventDefault();
+
+
     //Create AI Response
     try {
       const response = await fetch("/api/generate", {
@@ -52,6 +73,7 @@ export default function Home() {
         <h3>A . L . I . C . E</h3>
         <h4>Always Learning Interactive Companion Engine</h4>
 
+
         <fieldset>
           <legend><b>A.L.I.C.E</b> *{CurrentEmotion}*</legend>
           <div className={styles.result}>{result}</div>
@@ -59,7 +81,6 @@ export default function Home() {
       
       
       
-
 
 
 
@@ -74,6 +95,24 @@ export default function Home() {
           />
           <input type="submit" value="Send" />
         </form>
+
+        <div>
+          
+        </div>
+
+        <form onSubmit={devConsole}>
+          <fieldset>
+            <legend><b>Developer Options</b></legend>
+            <input
+                type="text"
+                name="consoleInput"
+                placeholder="Developer Console"
+                value={consoleInput}
+                onChange={(e) => setConsoleInput(e.target.value)}
+              />
+          </fieldset>
+        </form>
+        
       </main>
     </div>
   );

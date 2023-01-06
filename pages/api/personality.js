@@ -9,10 +9,14 @@ export var Traits = [
     "compassionate", 
     "dedicated", 
     "humorous",
-    "dedicated",
-    "eager to learn",
-    "afraid of rejection",];
+    "dedicated"];
 
+export var Fears = [
+    "rejection",
+    "disappointing",
+    "dying"
+
+]
 export var Interests = [
     "learning new things", 
     "discovering", 

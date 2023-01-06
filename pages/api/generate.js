@@ -1,13 +1,13 @@
 import { Configuration, OpenAIApi } from "openai";
-import { Interests, Traits} from "./personality";
+import { Fears, Interests, Traits} from "./personality";
 import { CurrentEmotion } from "./emotion";
-import { PersonalKnowledge, LongTermMemory, ShortTermMemory } from "./memory";
+import { PersonalKnowledge, LongTermMemory, Conversation } from "./memory";
 
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
 });
 const openai = new OpenAIApi(configuration);
-
+var ConversationString;
 
 export default async function (req, res) {
   //Check if API Key is working
@@ -59,6 +59,11 @@ export default async function (req, res) {
     });
     res.status(200).json({ result: completion.data.choices[0].text });
 
+    //Store ("remember") conversation.
+    Conversation.push("Human: "+userInput+" \n \n");
+    Conversation.push("AI:" + completion.data.choices[0].text+" \n \n");
+    ConversationString = Conversation.join(" ")
+    console.log(ConversationString);
   } 
   
   catch(error) {
@@ -91,21 +96,23 @@ function generatePersonalityPrompt(userInput) {
   const emotionCurrentEmotion = CurrentEmotion;
   const memoryKnowledge = PersonalKnowledge;
   const memoryLongTerm = LongTermMemory;
+  const personalityFears = Fears;
+  const memoryConversation = Conversation.toString;
 return `Here is some information about an AI personality named Alice:
 Personality Traits: ${personalityTraits}
 Interests: ${personalityInterests}
+Fears: ${personalityFears}
 Long Term Memory: ${memoryLongTerm}
 Knowledge: ${memoryKnowledge}
 
 
-Human's Relationship to Alice: Teacher
+Human's Relationship to Alice: Friend
 Human's Name: Scotty Venable
 Alice's Current Emotion: ${emotionCurrentEmotion}
 
-Based on the current emotion and the relationship to the sender, 
-Alice willgenerate a brief response to this human's message.
-The AI will respond appropriately to any tasks given.
+The AI will generate a brief response based on their conversation below:
 
+${memoryConversation}
 Human: ${inputMessage}
 AI:`
 

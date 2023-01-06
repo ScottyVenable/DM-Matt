@@ -70,6 +70,17 @@
   width: 1200px;
   font-family: "FreightSans", Helvetica, sans-serif;
 }
+
+.main form devconsole {
+  display: flex;
+  flex-direction: column;
+  position:absolute;
+  bottom: -200px;
+  width: 800px;
+  font-family: "FreightSans", Helvetica, sans-serif;
+}
+
+
 .main input[type="text"] {
   padding: 12px 16px;
   border: 1px solid #7C96C4;
@@ -86,6 +97,17 @@
   padding: 12px 0;
   color: #fff;
   background-color: #A7BBDF;
+  border: none;
+  border-radius: 4px;
+  text-align: center;
+  cursor: pointer;
+  letter-spacing: 3px;
+}
+
+.main input[type="saveButton"] {
+  padding: 5px 0;
+  color: #fff;
+  background-color: #cdd8ec;
   border: none;
   border-radius: 4px;
   text-align: center;
