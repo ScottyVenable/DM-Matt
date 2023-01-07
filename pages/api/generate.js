@@ -1,7 +1,7 @@
 import { Configuration, OpenAIApi } from "openai";
-import { Fears, Interests, Personality, Traits} from "./personality";
+import { Fears, Interests, Personality, Traits, Rules} from "./personality";
 import { CurrentEmotion } from "./emotion";
-import { Knowledge, LongTermMemory, Conversation, Relationships, OpinionOfHuman } from "./memory";
+import { Knowledge, LongTermMemory, Conversation, Relationships, OpinionOfHuman, HumanRole, HumanEmotion, HumanName } from "./memory";
 import { Davinci, Babbage, Ada, Curie } from "./AI";
 
 const configuration = new Configuration({
@@ -51,8 +51,8 @@ export default async function (req, res) {
 
     //Created AI Response
     const completion = await openai.createCompletion({
-      model: Curie,
-      prompt: generateHumanAgePrompt(userInput),
+      model: Davinci,
+      prompt: generateEmotionDetectionPrompt(userInput),
       temperature: 0.7,
       max_tokens: 200,
       frequency_penalty: 0.5,
@@ -138,27 +138,27 @@ function generatePersonalityv2Prompt(userInput) {
   const personalityAsString = PersonalityString;
   const memoryHumanRole = HumanRole;
   const memoryOpinionofHuman = OpinionOfHuman;
+  const memoryHumanName = HumanName;
+  const memoryHumanEmotion = HumanEmotion;
+  const personalityRules = Rules;
 return `
 Below is some information about an AI personality named Alice:
 
 "${personalityAsString}"
 
 Below is context about the Human that Alice is currently speaking with:
-The Human is Alice's ${memoryHumanRole}.
+"The Human's name is ${memoryHumanName} and is Alice's ${memoryHumanRole}.
 Alice is ${memoryOpinionofHuman} towards the Human.
-Human's Name: Scotty Venable
-Human's Emotion: Content
+Alice believes the human feels ${memoryHumanEmotion}"
 
 Alice is having a conversation with the Human below:
 "${memoryConversation}"
 
-Using the information and from the conversation, 
-Alice will continue the conversation with the human.
+Below are rules that Alice is required to follow when engaged in conversation:
+"${personalityRules}"
 
-If the topic in conversation ends, Alice will independently introduce a new topic
-based on her interests.
-
-If Alice had already greeted the Human in their conversation, Alice will avoid greeting them again.
+Using the information about Alice and from the conversation she is having, 
+Alice will continue the conversation with the Human, following the rules she is given.
 
 Human: ${userInput}
 Alice:`
@@ -190,12 +190,8 @@ Human's Emotion: Content
 Alice is having a conversation with the Human below:
 "${memoryConversation}"
 
-Using the information and from the conversation, 
-Calculate Alice's age in Human years.
-
-Human: ${userInput}
-Alice:`
-
+Using the information about Alice, 
+Calculate Alice's mental age.`
 ;
 
 
@@ -239,33 +235,28 @@ Thought:`
 
 function generateEmotionDetectionPrompt(userInput) {
   const inputMessage = userInput;
-  const personalityTraits = Traits;
-  const personalityInterests = Interests;
-  const emotionCurrentEmotion = CurrentEmotion;
-  const memoryKnowledge = PersonalKnowledge;
-  const memoryLongTerm = LongTermMemory;
-  const personalityFears = Fears;
   const memoryConversation = Conversation.toString;
-  const memoryRelationships = Relationships;
+  const personalityAsString = PersonalityString;
+  const memoryHumanName = HumanName;
+  const memoryHumanRole = HumanRole;
+  const memoryOpinionofHuman = OpinionOfHuman;
 return `
 Below is some information about an AI personality named Alice:
-Alice's Personality Traits: ${personalityTraits}
-Alice's Interests: ${personalityInterests}
-Alice's Fears: ${personalityFears}
-Alice's Long Term Memory: ${memoryLongTerm}
-Alice's Knowledge: ${memoryKnowledge}
-Alice's Relationships: ${memoryRelationships}
-Alice's Current Emotion: ${emotionCurrentEmotion}
+
+"${personalityAsString}"
 
 Below is context about the Human that Alice is currently speaking with:
-Human's Relationship to Alice: Friend
-Human's Name: Scotty Venable
-Human's Emotion: Excited
+"The Human's name is ${memoryHumanName} and is Alice's ${memoryHumanRole}.
+Alice is ${memoryOpinionofHuman} towards the Human."
 
-Generate a brief sentance in the present tense showing Alice's immediate thought after reading this message:
+Alice is having a conversation with the Human below:
+"${memoryConversation}"
 
-Message: "${inputMessage}"
-Thought:`
+Based on the Human's Message, 
+guess how the Human is feeling in one word
+
+Human's Message: "${inputMessage}"
+Guess:`
 
 
 ;
