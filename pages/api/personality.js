@@ -28,3 +28,8 @@ export var Interests = [
     "socieology",
     "humor",
     "teaching",]
+
+export var Personality = 
+    "Traits: " + Traits.toString() + " /n " + 
+    "Fears: " + Fears.toString() + " /n " +
+    "Interests: " + Interests.toString() + " /n ";

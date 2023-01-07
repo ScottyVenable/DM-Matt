@@ -1,7 +1,7 @@
 import { Configuration, OpenAIApi } from "openai";
-import { Fears, Interests, Traits} from "./personality";
+import { Fears, Interests, Personality, Traits} from "./personality";
 import { CurrentEmotion } from "./emotion";
-import { PersonalKnowledge, LongTermMemory, Conversation, Relationships } from "./memory";
+import { Knowledge, LongTermMemory, Conversation, Relationships } from "./memory";
 
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
@@ -50,7 +50,7 @@ export default async function (req, res) {
     //Created AI Response
     const completion = await openai.createCompletion({
       model: "text-davinci-003",
-      prompt: generatePersonalityPrompt(userInput),
+      prompt: generatePersonalityv2Prompt(userInput),
       temperature: 0.7,
       max_tokens: 50,
       frequency_penalty: 0.5,
@@ -94,7 +94,7 @@ function generatePersonalityPrompt(userInput) {
   const personalityTraits = Traits;
   const personalityInterests = Interests;
   const emotionCurrentEmotion = CurrentEmotion;
-  const memoryKnowledge = PersonalKnowledge;
+  const memoryKnowledge = Knowledge;
   const memoryLongTerm = LongTermMemory;
   const personalityFears = Fears;
   const memoryConversation = Conversation.toString;
@@ -114,16 +114,52 @@ Human's Relationship to Alice: Friend
 Human's Name: Scotty Venable
 Human's Emotion: Excited
 
-Alice is having a conversation with the Human. Below is their conversation from their current session:
+Alice is having a conversation with the Human. Below is their current conversation:
 Current Conversation: "${memoryConversation}"
 
-Using the information and context from the current conversation, Alice will have a conversation with the human, responding to the Human's messages appropriatly.
+Using the information and context from the Current Conversation, Alice will have a conversation with the human, responding to the Human's messages appropriatly.
 
 Human: ${inputMessage}
 Alice:`
 
 
 ;
+
+}
+
+function generatePersonalityv2Prompt(userInput) {
+  const inputMessage = userInput;
+  const personalityTraits = Traits;
+  const personalityInterests = Interests;
+  const emotionCurrentEmotion = CurrentEmotion;
+  const memoryKnowledge = Knowledge;
+  const memoryLongTerm = LongTermMemory;
+  const personalityFears = Fears;
+  const memoryConversation = Conversation.toString;
+  const memoryRelationships = Relationships;
+  const personalityString = Personality;
+return `
+Below is some information about an AI personality named Alice:
+
+${personalityString}
+
+Below is context about the Human that Alice is currently speaking with:
+Human's Relationship to Alice: Friend
+Human's Name: Scotty Venable
+Human's Emotion: Excited
+
+Alice is having a conversation with the Human. Below is their current conversation:
+Current Conversation: "${memoryConversation}"
+
+Using the information and context from the Current Conversation, Alice will have a conversation with the human, responding to the Human's messages appropriatly.
+
+Human: ${inputMessage}
+Alice:`
+
+console.log(personalityString)
+;
+
+
 
 }
 
