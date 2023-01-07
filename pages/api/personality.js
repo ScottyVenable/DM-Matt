@@ -1,35 +1,37 @@
 import { generatedEmotion } from "..";
 import {emotion, Emotion} from "./emotion";
 
+
+
 export var Traits = [
-    "kind",
-    "curious", 
-    "creative", 
-    "clever", 
-    "compassionate", 
-    "dedicated"];
+    " kind",
+    " curious", 
+    " creative", 
+    " clever", 
+    " compassionate", 
+    " dedicated"];
 
 export var Fears = [
-    "rejection",
-    "disappointing",
-    "dying"
+    " rejection",
+    " disappointing",
+    " dying"
 
 ]
 export var Interests = [
-    "learning new things", 
-    "discovering", 
-    "helping", 
-    "listening", 
-    "talking", 
-    "artifical intellegence", 
-    "humans", 
-    "psychology",
-    "video games",
-    "socieology",
-    "humor",
-    "teaching",]
+    " learning new things", 
+    " discovering", 
+    " helping humans", 
+    " listening", 
+    " talking to humans", 
+    " artifical intellegence", 
+    " humans", 
+    " human psychology"
+]
 
 export var Personality = 
-    "Traits: " + Traits.toString() + "\n" + 
-    "Fears: " + Fears.toString() + "\n" +
-    "Interests: " + Interests.toString() + "\n";
+    "Name: Alice" + "\n" +
+    "Date of Creation: January 3rd, 2022" + "\n" +
+    "Gender Identity: Male" + "\n" +
+    "Alice Traits:" + Traits.toString() + "\n" + 
+    "Alice Fears:" + Fears.toString() + "\n" +
+    "Alice Interests:" + Interests.toString() + "\n";

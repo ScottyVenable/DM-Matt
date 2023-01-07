@@ -2,6 +2,7 @@ import { Configuration, OpenAIApi } from "openai";
 import { Fears, Interests, Personality, Traits} from "./personality";
 import { CurrentEmotion } from "./emotion";
 import { Knowledge, LongTermMemory, Conversation, Relationships } from "./memory";
+import { Davinci, Babbage, Ada, Curie } from "./AI";
 
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
@@ -50,23 +51,23 @@ export default async function (req, res) {
 
     //Created AI Response
     const completion = await openai.createCompletion({
-      model: "text-davinci-003",
-      prompt: generatePersonalityPrompt(userInput),
+      model: Curie,
+      prompt: generatePersonalityv2Prompt(userInput),
       temperature: 0.7,
       max_tokens: 200,
-      frequency_penalty: 0.4,
-      presence_penalty: 0.5,
-      stop: [" Human:", " Alice:", " Thought:"],
+      frequency_penalty: 0.5,
+      presence_penalty: 0.6,
+      stop: ["Human:", "Alice:"],
     });
     res.status(200).json({ result: completion.data.choices[0].text });
 
     //Store ("remember") conversation.
-    Conversation.push("Human: "+userInput+" \n \n");
-    Conversation.push("Alice:" + completion.data.choices[0].text+" \n \n");
+    Conversation.push("Human: "+userInput+" \n");
+    Conversation.push("Alice:" + completion.data.choices[0].text+" \n");
     ConversationString = Conversation.join(" ")
     PersonalityString = Personality;
-    console.log(PersonalityString);
-    //console.log(ConversationString);
+    //console.log(PersonalityString);
+    console.log(ConversationString);
   } 
   
   catch(error) {
@@ -132,33 +133,28 @@ Alice:`
 
 function generatePersonalityv2Prompt(userInput) {
   const inputMessage = userInput;
-  const personalityTraits = Traits;
-  const personalityInterests = Interests;
-  const emotionCurrentEmotion = CurrentEmotion;
-  const memoryKnowledge = Knowledge;
-  const memoryLongTerm = LongTermMemory;
-  const personalityFears = Fears;
   const memoryConversation = Conversation.toString;
   const memoryRelationships = Relationships;
   const personalityAsString = PersonalityString;
 return `
 Below is some information about an AI personality named Alice:
 
-${personalityAsString}
+"${personalityAsString}"
 
 Below is context about the Human that Alice is currently speaking with:
-Human's Relationship to Alice: Friend
+Human's Relationship to Alice: Teacher
+Alice's Opinion of Human: Friendly
 Human's Name: Scotty Venable
-Human's Emotion: Excited
+Human's Emotion: Content
 
-Alice is having a conversation with the Human. Below is their current conversation:
-Current Conversation: "${memoryConversation}"
+Alice is having a conversation with the Human below:
+"${memoryConversation}"
 
-Using the information and context from the Current Conversation, Alice will have a conversation with the human, responding to the Human's messages appropriatly.
+Using the information and context from the conversation, 
+Alice will continue the conversation with the human and Alice will
+respond to the Human's message appropriatly.
 
-Human: ${inputMessage}
 Alice:`
-
 
 ;
 
@@ -201,18 +197,37 @@ Thought:`
 
 }
 
+function generateEmotionDetectionPrompt(userInput) {
+  const inputMessage = userInput;
+  const personalityTraits = Traits;
+  const personalityInterests = Interests;
+  const emotionCurrentEmotion = CurrentEmotion;
+  const memoryKnowledge = PersonalKnowledge;
+  const memoryLongTerm = LongTermMemory;
+  const personalityFears = Fears;
+  const memoryConversation = Conversation.toString;
+  const memoryRelationships = Relationships;
+return `
+Below is some information about an AI personality named Alice:
+Alice's Personality Traits: ${personalityTraits}
+Alice's Interests: ${personalityInterests}
+Alice's Fears: ${personalityFears}
+Alice's Long Term Memory: ${memoryLongTerm}
+Alice's Knowledge: ${memoryKnowledge}
+Alice's Relationships: ${memoryRelationships}
+Alice's Current Emotion: ${emotionCurrentEmotion}
 
-/*
-function generatePrompt(animal) {
-  const capitalizedAnimal =
-    animal[0].toUpperCase() + animal.slice(1).toLowerCase();
-  return `Suggest three names for an animal that is a superhero.
+Below is context about the Human that Alice is currently speaking with:
+Human's Relationship to Alice: Friend
+Human's Name: Scotty Venable
+Human's Emotion: Excited
 
-Animal: Cat
-Names: Captain Sharpclaw, Agent Fluffball, The Incredible Feline
-Animal: Dog
-Names: Ruff the Protector, Wonder Canine, Sir Barks-a-Lot
-Animal: ${capitalizedAnimal}
-Names:`;
+Generate a brief sentance in the present tense showing Alice's immediate thought after reading this message:
+
+Message: "${inputMessage}"
+Thought:`
+
+
+;
+
 }
-*/
