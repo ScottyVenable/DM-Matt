@@ -36,6 +36,7 @@
   flex-direction: column;
   align-items: center;
   padding-top: 0px;
+  width: 100%;
 }
 .main .icon {
   width: 400px;
@@ -45,7 +46,9 @@
     top: -90px;
 }
 .main h3 {
-  font-size: 50px;
+  font-size: 30px;
+  text-align: center;
+  width: 100%;
   line-height: 40px;
   font-weight: bold;
   color: #202123;
@@ -60,6 +63,7 @@
   color: #5e77a9;
   letter-spacing: 5px;
   padding-bottom: 40px;
+  text-align: center;
 }
 
 .main form {
@@ -67,7 +71,7 @@
   flex-direction: column;
   position:absolute;
   bottom: 20px;
-  width: 1200px;
+  width: 90%;
   font-family: "FreightSans", Helvetica, sans-serif;
 }
 
@@ -94,7 +98,7 @@
   opacity: 1;
 }
 .main input[type="submit"] {
-  padding: 12px 0;
+  padding: 15px 0;
   color: #fff;
   background-color: #A7BBDF;
   border: none;
@@ -121,7 +125,7 @@
   margin-top: 0px;
   margin-bottom: 10px;
   margin-left: 4px;
-  width: 900px;
+  width: 100%;
   letter-spacing: 1px;
   font-family: "FreightSans", Helvetica, sans-serif;
 }
@@ -131,7 +135,7 @@
   font-weight: normal;
   font-family: "FreightSans", Helvetica, sans-serif;
   text-align: center;
-  width: 500px;
+  width: 50%;
   position: fixed;
   left: 200px;
   top: 250px;
@@ -152,6 +156,7 @@
   border: 1px solid silver;
   padding: 8px;    
   border-radius: 4px;
+  width: 80%;
 }
 
 .main legend {

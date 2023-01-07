@@ -1,7 +1,7 @@
 import { Configuration, OpenAIApi } from "openai";
 import { Fears, Interests, Traits} from "./personality";
 import { CurrentEmotion } from "./emotion";
-import { PersonalKnowledge, LongTermMemory, Conversation } from "./memory";
+import { PersonalKnowledge, LongTermMemory, Conversation, Relationships } from "./memory";
 
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
@@ -52,16 +52,16 @@ export default async function (req, res) {
       model: "text-davinci-003",
       prompt: generatePersonalityPrompt(userInput),
       temperature: 0.7,
-      max_tokens: 100,
+      max_tokens: 50,
       frequency_penalty: 0.5,
       presence_penalty: 0.6,
-      stop: [" Human:", " AI:"],
+      stop: [" Human:", " Alice:", " Thought:"],
     });
     res.status(200).json({ result: completion.data.choices[0].text });
 
     //Store ("remember") conversation.
     Conversation.push("Human: "+userInput+" \n \n");
-    Conversation.push("AI:" + completion.data.choices[0].text+" \n \n");
+    Conversation.push("Alice:" + completion.data.choices[0].text+" \n \n");
     ConversationString = Conversation.join(" ")
     console.log(ConversationString);
   } 
@@ -98,30 +98,69 @@ function generatePersonalityPrompt(userInput) {
   const memoryLongTerm = LongTermMemory;
   const personalityFears = Fears;
   const memoryConversation = Conversation.toString;
-return `Here is some information about an AI personality named Alice:
-Personality Traits: ${personalityTraits}
-Interests: ${personalityInterests}
-Fears: ${personalityFears}
-Long Term Memory: ${memoryLongTerm}
-Knowledge: ${memoryKnowledge}
-
-
-Human's Relationship to Alice: Friend
-Human's Name: Scotty Venable
+  const memoryRelationships = Relationships;
+return `
+Below is some information about an AI personality named Alice:
+Alice's Personality Traits: ${personalityTraits}
+Alice's Interests: ${personalityInterests}
+Alice's Fears: ${personalityFears}
+Alice's Long Term Memory: ${memoryLongTerm}
+Alice's Knowledge: ${memoryKnowledge}
+Alice's Relationships: ${memoryRelationships}
 Alice's Current Emotion: ${emotionCurrentEmotion}
 
-The AI will generate a brief response based on their conversation below:
+Below is context about the Human that Alice is currently speaking with:
+Human's Relationship to Alice: Friend
+Human's Name: Scotty Venable
+Human's Emotion: Excited
 
-${memoryConversation}
+Alice is having a conversation with the Human. Below is their conversation from their current session:
+Current Conversation: "${memoryConversation}"
+
+Using the information and context from the current conversation, Alice will have a conversation with the human, responding to the Human's messages appropriatly.
+
 Human: ${inputMessage}
-AI:`
+Alice:`
 
 
 ;
 
 }
 
+function generateThoughtProcessPrompt(userInput) {
+  const inputMessage = userInput;
+  const personalityTraits = Traits;
+  const personalityInterests = Interests;
+  const emotionCurrentEmotion = CurrentEmotion;
+  const memoryKnowledge = PersonalKnowledge;
+  const memoryLongTerm = LongTermMemory;
+  const personalityFears = Fears;
+  const memoryConversation = Conversation.toString;
+  const memoryRelationships = Relationships;
+return `
+Below is some information about an AI personality named Alice:
+Alice's Personality Traits: ${personalityTraits}
+Alice's Interests: ${personalityInterests}
+Alice's Fears: ${personalityFears}
+Alice's Long Term Memory: ${memoryLongTerm}
+Alice's Knowledge: ${memoryKnowledge}
+Alice's Relationships: ${memoryRelationships}
+Alice's Current Emotion: ${emotionCurrentEmotion}
 
+Below is context about the Human that Alice is currently speaking with:
+Human's Relationship to Alice: Friend
+Human's Name: Scotty Venable
+Human's Emotion: Excited
+
+Generate a brief sentance in the present tense showing Alice's immediate thought after reading this message:
+
+Message: "${inputMessage}"
+Thought:`
+
+
+;
+
+}
 
 
 /*

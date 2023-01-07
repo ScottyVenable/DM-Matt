@@ -7,8 +7,6 @@ export var Traits = [
     "creative", 
     "clever", 
     "compassionate", 
-    "dedicated", 
-    "humorous",
     "dedicated"];
 
 export var Fears = [

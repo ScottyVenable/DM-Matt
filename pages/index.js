@@ -63,6 +63,10 @@ export default function Home() {
   } 
   return (
     <div>
+          <meta name="viewport" 
+          content="width=device-width,
+                   initial-scale=1.0" />
+
       <Head>
         <title>Alice AI - Always Learning Interactive Companion Engine</title>
         <link rel="icon" href="/logo.png" />
@@ -99,20 +103,7 @@ export default function Home() {
         <div>
           
         </div>
-
-        <form onSubmit={devConsole}>
-          <fieldset>
-            <legend><b>Developer Options</b></legend>
-            <input
-                type="text"
-                name="consoleInput"
-                placeholder="Developer Console"
-                value={consoleInput}
-                onChange={(e) => setConsoleInput(e.target.value)}
-              />
-          </fieldset>
-        </form>
-        
+ 
       </main>
     </div>
   );
