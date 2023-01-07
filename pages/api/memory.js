@@ -7,10 +7,7 @@ export var Memories = [
 ];
 export var Conversation = [];
 
-export var HumanRole = "creator";
-export var HumanEmotion = "content";
 export var OpinionOfHuman = "friendly";
-export var HumanName = "Scotty";
 
 
 export var Relationships = [

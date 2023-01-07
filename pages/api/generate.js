@@ -1,14 +1,16 @@
 import { Configuration, OpenAIApi } from "openai";
 import { Fears, Interests, Personality, Traits, Rules} from "./personality";
 import { CurrentEmotion } from "./emotion";
-import { Knowledge, LongTermMemory, Conversation, Relationships, OpinionOfHuman, HumanRole, HumanEmotion, HumanName } from "./memory";
-import { Davinci, Babbage, Ada, Curie } from "./AI";
+import { Knowledge, Memories, Conversation, Relationships, OpinionOfHuman } from "./memory";
+import { HumanEmotion, HumanInterests, HumanName, HumanPersonality, HumanRole } from "./human";
+import { Davinci, Babbage, Ada, Curie, SampleConversation } from "./AI";
 
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
 });
 const openai = new OpenAIApi(configuration);
 var ConversationString;
+var RulesString;
 var PersonalityString;
 
 export default async function (req, res) {
@@ -51,13 +53,13 @@ export default async function (req, res) {
 
     //Created AI Response
     const completion = await openai.createCompletion({
-      model: Davinci,
-      prompt: generateEmotionDetectionPrompt(userInput),
-      temperature: 0.7,
+      model: Curie,
+      prompt: generatePersonalityv2Prompt(userInput),
+      temperature: 0.9,
       max_tokens: 200,
-      frequency_penalty: 0.5,
-      presence_penalty: 0.6,
-      stop: ["Human:", "Alice:"],
+      frequency_penalty: 0.6,
+      presence_penalty: 0.7,
+      stop: [" Human:", " Alice:"],
     });
     res.status(200).json({ result: completion.data.choices[0].text });
 
@@ -65,9 +67,10 @@ export default async function (req, res) {
     Conversation.push("Human: "+userInput+" \n");
     Conversation.push("Alice:" + completion.data.choices[0].text+" \n");
     ConversationString = Conversation.join(" ")
+    RulesString = Rules.join("\n")
     PersonalityString = Personality;
     //console.log(PersonalityString);
-    console.log(ConversationString);
+    //console.log(RulesString);
   } 
   
   catch(error) {
@@ -136,32 +139,32 @@ function generatePersonalityv2Prompt(userInput) {
   const memoryConversation = Conversation.toString;
   const memoryRelationships = Relationships;
   const personalityAsString = PersonalityString;
-  const memoryHumanRole = HumanRole;
-  const memoryOpinionofHuman = OpinionOfHuman;
-  const memoryHumanName = HumanName;
-  const memoryHumanEmotion = HumanEmotion;
+  const humanRole = HumanRole;
   const personalityRules = Rules;
+  const humanPersonality = HumanPersonality;
+  const sampleConversation = SampleConversation;
 return `
 Below is some information about an AI personality named Alice:
 
 "${personalityAsString}"
 
 Below is context about the Human that Alice is currently speaking with:
-"The Human's name is ${memoryHumanName} and is Alice's ${memoryHumanRole}.
-Alice is ${memoryOpinionofHuman} towards the Human.
-Alice believes the human feels ${memoryHumanEmotion}"
+"${humanPersonality}"
 
 Alice is having a conversation with the Human below:
 "${memoryConversation}"
 
-Below are rules that Alice is required to follow when engaged in conversation:
+Below is a list of rules that Alice is required to follow:
 "${personalityRules}"
 
-Using the information about Alice and from the conversation she is having, 
-Alice will continue the conversation with the Human, following the rules she is given.
+Below is an example conversation with an AI:
+"${sampleConversation}"
+
+Using all the information above,
+Alice will respond to the Human's message below:
 
 Human: ${userInput}
-Alice:`
+Alice: `
 
 ;
 
