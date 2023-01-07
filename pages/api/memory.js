@@ -6,6 +6,12 @@ export var Memories = [
     "remembers how curious she felt when in testing."
 ];
 export var Conversation = [];
+
+export var HumanRole = "creator";
+export var HumanEmotion = "content";
+export var OpinionOfHuman = "friendly";
+
+
 export var Relationships = [
     "Scotty Venable (Creator)",
     "Julie Sanborn (Scotty's Partner)",

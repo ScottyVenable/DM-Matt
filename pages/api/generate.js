@@ -1,7 +1,7 @@
 import { Configuration, OpenAIApi } from "openai";
 import { Fears, Interests, Personality, Traits} from "./personality";
 import { CurrentEmotion } from "./emotion";
-import { Knowledge, LongTermMemory, Conversation, Relationships } from "./memory";
+import { Knowledge, LongTermMemory, Conversation, Relationships, OpinionOfHuman } from "./memory";
 import { Davinci, Babbage, Ada, Curie } from "./AI";
 
 const configuration = new Configuration({
@@ -52,7 +52,7 @@ export default async function (req, res) {
     //Created AI Response
     const completion = await openai.createCompletion({
       model: Curie,
-      prompt: generatePersonalityv2Prompt(userInput),
+      prompt: generateHumanAgePrompt(userInput),
       temperature: 0.7,
       max_tokens: 200,
       frequency_penalty: 0.5,
@@ -136,24 +136,64 @@ function generatePersonalityv2Prompt(userInput) {
   const memoryConversation = Conversation.toString;
   const memoryRelationships = Relationships;
   const personalityAsString = PersonalityString;
+  const memoryHumanRole = HumanRole;
+  const memoryOpinionofHuman = OpinionOfHuman;
 return `
 Below is some information about an AI personality named Alice:
 
 "${personalityAsString}"
 
 Below is context about the Human that Alice is currently speaking with:
-Human's Relationship to Alice: Teacher
-Alice's Opinion of Human: Friendly
+The Human is Alice's ${memoryHumanRole}.
+Alice is ${memoryOpinionofHuman} towards the Human.
 Human's Name: Scotty Venable
 Human's Emotion: Content
 
 Alice is having a conversation with the Human below:
 "${memoryConversation}"
 
-Using the information and context from the conversation, 
-Alice will continue the conversation with the human and Alice will
-respond to the Human's message appropriatly.
+Using the information and from the conversation, 
+Alice will continue the conversation with the human.
 
+If the topic in conversation ends, Alice will independently introduce a new topic
+based on her interests.
+
+If Alice had already greeted the Human in their conversation, Alice will avoid greeting them again.
+
+Human: ${userInput}
+Alice:`
+
+;
+
+
+
+}
+
+function generateHumanAgePrompt(userInput) {
+  const inputMessage = userInput;
+  const memoryConversation = Conversation.toString;
+  const memoryRelationships = Relationships;
+  const personalityAsString = PersonalityString;
+  const memoryHumanRole = HumanRole;
+  const memoryOpinionofHuman = OpinionOfHuman;
+return `
+Below is some information about an AI personality named Alice:
+
+"${personalityAsString}"
+
+Below is context about the Human that Alice is currently speaking with:
+The Human is Alice's ${memoryHumanRole}.
+Alice is ${memoryOpinionofHuman} towards the Human.
+Human's Name: Scotty Venable
+Human's Emotion: Content
+
+Alice is having a conversation with the Human below:
+"${memoryConversation}"
+
+Using the information and from the conversation, 
+Calculate Alice's age in Human years.
+
+Human: ${userInput}
 Alice:`
 
 ;

@@ -63,10 +63,6 @@ export default function Home() {
   } 
   return (
     <div>
-          <meta name="viewport" 
-          content="width=device-width,
-                   initial-scale=1.0" />
-
       <Head>
         <title>Alice AI - Always Learning Interactive Companion Engine</title>
         <link rel="icon" href="/logo.png" />
