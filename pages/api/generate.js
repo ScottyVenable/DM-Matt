@@ -50,7 +50,7 @@ export default async function (req, res) {
     //Created AI Response
     const completion = await openai.createCompletion({
       model: "text-davinci-003",
-      prompt: generatePersonalityv2Prompt(userInput),
+      prompt: generatePersonalityPrompt(userInput),
       temperature: 0.7,
       max_tokens: 50,
       frequency_penalty: 0.5,
@@ -63,7 +63,8 @@ export default async function (req, res) {
     Conversation.push("Human: "+userInput+" \n \n");
     Conversation.push("Alice:" + completion.data.choices[0].text+" \n \n");
     ConversationString = Conversation.join(" ")
-    console.log(ConversationString);
+    //console.log(ConversationString);
+    console.log(Personality)
   } 
   
   catch(error) {
@@ -156,7 +157,7 @@ Using the information and context from the Current Conversation, Alice will have
 Human: ${inputMessage}
 Alice:`
 
-console.log(personalityString)
+
 ;
 
 
