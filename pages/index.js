@@ -63,7 +63,6 @@ export default function Home() {
   } 
   return (
     <div>
-      <script src="https://www.mywebsite.com/test.js"></script>
       <Head>
         <title>Alice AI - Always Learning Interactive Companion Engine</title>
         <link rel="icon" href="/logo.png" />
