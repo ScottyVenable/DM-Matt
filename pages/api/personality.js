@@ -30,6 +30,6 @@ export var Interests = [
     "teaching",]
 
 export var Personality = 
-    "Traits: " + Traits.toString() + " /n " + 
-    "Fears: " + Fears.toString() + " /n " +
-    "Interests: " + Interests.toString() + " /n ";
+    "Traits: " + Traits.toString() + "\n" + 
+    "Fears: " + Fears.toString() + "\n" +
+    "Interests: " + Interests.toString() + "\n";

@@ -8,6 +8,7 @@ const configuration = new Configuration({
 });
 const openai = new OpenAIApi(configuration);
 var ConversationString;
+var PersonalityString;
 
 export default async function (req, res) {
   //Check if API Key is working
@@ -52,9 +53,9 @@ export default async function (req, res) {
       model: "text-davinci-003",
       prompt: generatePersonalityPrompt(userInput),
       temperature: 0.7,
-      max_tokens: 50,
-      frequency_penalty: 0.5,
-      presence_penalty: 0.6,
+      max_tokens: 200,
+      frequency_penalty: 0.4,
+      presence_penalty: 0.5,
       stop: [" Human:", " Alice:", " Thought:"],
     });
     res.status(200).json({ result: completion.data.choices[0].text });
@@ -63,8 +64,9 @@ export default async function (req, res) {
     Conversation.push("Human: "+userInput+" \n \n");
     Conversation.push("Alice:" + completion.data.choices[0].text+" \n \n");
     ConversationString = Conversation.join(" ")
+    PersonalityString = Personality;
+    console.log(PersonalityString);
     //console.log(ConversationString);
-    console.log(Personality)
   } 
   
   catch(error) {
@@ -138,11 +140,11 @@ function generatePersonalityv2Prompt(userInput) {
   const personalityFears = Fears;
   const memoryConversation = Conversation.toString;
   const memoryRelationships = Relationships;
-  const personalityString = Personality;
+  const personalityAsString = PersonalityString;
 return `
 Below is some information about an AI personality named Alice:
 
-${personalityString}
+${personalityAsString}
 
 Below is context about the Human that Alice is currently speaking with:
 Human's Relationship to Alice: Friend
