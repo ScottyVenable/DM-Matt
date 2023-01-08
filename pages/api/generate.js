@@ -3,7 +3,7 @@ import { Fears, Interests, Personality, Traits, Rules} from "./personality";
 import { CurrentEmotion } from "./emotion";
 import { Knowledge, Memories, Conversation, Relationships, OpinionOfHuman } from "./memory";
 import { HumanEmotion, HumanInterests, HumanName, HumanPersonality, HumanRole } from "./human";
-import { Davinci, Babbage, Ada, Curie, SampleConversation } from "./AI";
+import { Davinci, Babbage, Ada, Curie } from "./AI";
 
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
@@ -53,12 +53,12 @@ export default async function (req, res) {
 
     //Created AI Response
     const completion = await openai.createCompletion({
-      model: Curie,
+      model: Davinci,
       prompt: generatePersonalityv2Prompt(userInput),
       temperature: 0.9,
-      max_tokens: 200,
+      max_tokens: 1000,
       frequency_penalty: 0.6,
-      presence_penalty: 0.7,
+      presence_penalty: 0.6,
       stop: [" Human:", " Alice:"],
     });
     res.status(200).json({ result: completion.data.choices[0].text });
@@ -66,11 +66,17 @@ export default async function (req, res) {
     //Store ("remember") conversation.
     Conversation.push("Human: "+userInput+" \n");
     Conversation.push("Alice:" + completion.data.choices[0].text+" \n");
+    console.clear();
+    if (Conversation.length > 2) {
+      Conversation.splice(Conversation.length, 1); // 2nd parameter means remove one item only
+    }
+
     ConversationString = Conversation.join(" ")
     RulesString = Rules.join("\n")
     PersonalityString = Personality;
     //console.log(PersonalityString);
     //console.log(RulesString);
+    console.log(ConversationString);
   } 
   
   catch(error) {
@@ -142,26 +148,20 @@ function generatePersonalityv2Prompt(userInput) {
   const humanRole = HumanRole;
   const personalityRules = Rules;
   const humanPersonality = HumanPersonality;
-  const sampleConversation = SampleConversation;
 return `
-Below is some information about an AI personality named Alice:
-
+This is some information about an AI personality named Alice:
 "${personalityAsString}"
 
-Below is context about the Human that Alice is currently speaking with:
+Alice is having a conversation with a Human. Below is information about the Human:
 "${humanPersonality}"
 
-Alice is having a conversation with the Human below:
+Here is the conversation Alice is in:
 "${memoryConversation}"
 
-Below is a list of rules that Alice is required to follow:
+Alice is required to follow these rules:
 "${personalityRules}"
 
-Below is an example conversation with an AI:
-"${sampleConversation}"
-
-Using all the information above,
-Alice will respond to the Human's message below:
+Have a conversation with the Human.
 
 Human: ${userInput}
 Alice: `
