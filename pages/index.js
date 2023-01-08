@@ -2,6 +2,7 @@ import Head from "next/head";
 import { useState } from "react";
 import styles from "./index.module.css";
 import { CurrentEmotion } from "./api/emotion";
+import { AliceResponse } from "./api/generate";
 
 export default function Home() {
   const [humanInput, setHumanInput] = useState("");
@@ -35,6 +36,7 @@ export default function Home() {
     event.preventDefault();
 
 
+
     //Create AI Response
     try {
       const response = await fetch("/api/generate", {
@@ -45,13 +47,17 @@ export default function Home() {
         body: JSON.stringify({ userInput: humanInput }),
       });
       
-      
+
       const data = await response.json();
       if (response.status !== 200) {
         throw data.error || new Error(`Request failed with status ${response.status}`);
       }
 
+
       setResult(data.result);
+
+
+
 
     }
     catch(error) {
@@ -60,8 +66,12 @@ export default function Home() {
       alert(error.message);
     }
 
+
+
   } 
+ 
   return (
+    
     <div>
       <Head>
         <title>Alice AI - Always Learning Interactive Companion Engine</title>
@@ -102,8 +112,9 @@ export default function Home() {
  
       </main>
     </div>
-  );
-
+  )
+  
+  ;
   //Generate an Emotion based on the input recieved.
 
   //Site Design

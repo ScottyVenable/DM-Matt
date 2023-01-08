@@ -12,6 +12,7 @@ const openai = new OpenAIApi(configuration);
 var ConversationString;
 var RulesString;
 var PersonalityString;
+export var AliceResponse;
 
 export default async function (req, res) {
   //Check if API Key is working
@@ -62,10 +63,12 @@ export default async function (req, res) {
       stop: [" Human:", " Alice:"],
     });
     res.status(200).json({ result: completion.data.choices[0].text });
+    AliceResponse = completion.data.choices[0].text
     //Store ("remember") conversation.
     Conversation.push("Human: "+userInput+" \n");
     Conversation.push("Alice:" + completion.data.choices[0].text+" \n");
-    
+
+
     console.clear();
     if (Conversation.length > 2) {
       Conversation.splice(Conversation.length, 1); // 2nd parameter means remove one item only
@@ -77,7 +80,9 @@ export default async function (req, res) {
     //console.log(PersonalityString);
     //console.log(RulesString);
     console.log(ConversationString);
-  } 
+
+
+  }
   
   catch(error) {
     // Consider adjusting the error handling logic for your use case
