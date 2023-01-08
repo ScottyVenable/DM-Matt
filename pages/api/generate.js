@@ -62,10 +62,10 @@ export default async function (req, res) {
       stop: [" Human:", " Alice:"],
     });
     res.status(200).json({ result: completion.data.choices[0].text });
-
     //Store ("remember") conversation.
     Conversation.push("Human: "+userInput+" \n");
     Conversation.push("Alice:" + completion.data.choices[0].text+" \n");
+    
     console.clear();
     if (Conversation.length > 2) {
       Conversation.splice(Conversation.length, 1); // 2nd parameter means remove one item only
