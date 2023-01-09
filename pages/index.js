@@ -56,9 +56,6 @@ export default function Home() {
 
       setResult(data.result);
 
-
-
-
     }
     catch(error) {
       // Consider implementing your own error handling logic here
@@ -73,6 +70,7 @@ export default function Home() {
   return (
     
     <div>
+      Retry-After: <delay-seconds>5</delay-seconds>
       <Head>
         <title>Alice AI - Always Learning Interactive Companion Engine</title>
         <link rel="icon" href="/logo.png" />
