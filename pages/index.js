@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { useState } from "react";
+import { useInsertionEffect, useState } from "react";
 import styles from "./index.module.css";
 import { CurrentEmotion } from "./api/emotion";
 import { AliceResponse } from "./api/generate";
@@ -70,24 +70,40 @@ export default function Home() {
   return (
     
     <div>
-      Retry-After: <delay-seconds>5</delay-seconds>
       <Head>
-        <title>Alice AI - Always Learning Interactive Companion Engine</title>
+        <title>A.L.I.C.E AI - Always Learning Interactive Companion Engine</title>
         <link rel="icon" href="/logo.png" />
       </Head>
 
       <main className={styles.main}>
         <img src="/logo.png" className={styles.icon} />
         <h3>A . L . I . C . E</h3>
-        <h4>Always Learning Interactive Companion Engine</h4>
-
+        <h4><b>A</b>lways <b>L</b>earning <b>I</b>nteractive <b>C</b>ompanion <b>E</b>ngine</h4>
 
         <fieldset>
-          <legend><b>A.L.I.C.E</b> *{CurrentEmotion}*</legend>
+          <legend><b>A.L.I.C.E</b></legend>
+
+          <div class="typing">
+            <div class="bubble">
+              <div class="ellipsis one"></div>
+              <div class="ellipsis two"></div>
+              <div class="ellipsis three"></div>
+            </div>
+          </div>
+          
           <div className={styles.result}>{result}</div>
         </fieldset>
-      
-      
+
+        <fieldset>
+        <legend><b>Data</b></legend>
+          <data className={styles.data}>
+
+            <fieldset>
+              {CurrentEmotion}
+            </fieldset>
+          </data>
+        </fieldset>
+
       
 
 
@@ -111,7 +127,7 @@ export default function Home() {
       </main>
     </div>
   )
-  
+
   ;
   //Generate an Emotion based on the input recieved.
 

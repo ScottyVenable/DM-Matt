@@ -23,6 +23,8 @@
 }
 
 
+
+
 .main,
 .main input {
   font-size: 16px;
@@ -30,6 +32,7 @@
   color: #353740;
   font-family: "FreightSans", Helvetica, sans-serif;
   letter-spacing: 1px;
+  
 }
 .main {
   display: flex;
@@ -59,7 +62,7 @@
 .main h4 {
   font-size: 16px;
   line-height: 40px;
-  font-weight: bold;
+  font-weight: normal;
   color: #5e77a9;
   letter-spacing: 5px;
   padding-bottom: 40px;
@@ -91,6 +94,7 @@
   border-radius: 4px;
   margin-bottom: 24px;
   outline-color: #7C96C4;
+  font-family: 'FreightSans', sans-serif;
 }
 
 .main ::placeholder {
@@ -130,26 +134,14 @@
   font-family: "FreightSans", Helvetica, sans-serif;
 }
 
-.main .data1 {
+.main .data {
+  margin-top: 10px;
   color: #4d5667;
   font-weight: normal;
   font-family: "FreightSans", Helvetica, sans-serif;
-  text-align: center;
-  width: 50%;
-  position: fixed;
-  left: 200px;
-  top: 250px;
-
+  width: 80%;
 }
 
-.main .data2 {
-  color: #4d5667;
-  font-weight: normal;
-  letter-spacing: 1px;
-  font-family: "FreightSans", Helvetica, sans-serif;
-
-
-}
 
 .main fieldset {
   margin: 3px;
@@ -159,9 +151,42 @@
   width: 80%;
 }
 
+.data fieldset {
+  border: 1px solid #5c677b;   
+  border-radius: 4px;
+  width: 15%;
+  text-align: center;
+  padding: 5px;
+  background-color: #cdd8ec;
+}
+
+
+
+.data legend {
+  letter-spacing: 2px;
+  text-align: center;
+}
+
 .main legend {
-  padding: 2px;
+  padding: 0px;
   letter-spacing: 2px; 
 }
+
+.main .FixedHeightContainer
+{
+  float:right;
+  width:25px; 
+  padding:3px; 
+    background:#f00;
+}
+.main .Content
+{
+  height:250px;
+   overflow:auto;
+    background:#fff;
+}
+
+
+
 
 

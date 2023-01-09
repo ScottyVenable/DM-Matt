@@ -125,7 +125,8 @@ Alice's Fears: ${personalityFears}
 Alice's Long Term Memory: ${memoryLongTerm}
 Alice's Knowledge: ${memoryKnowledge}
 Alice's Relationships: ${memoryRelationships}
-Alice's Current Emotion: ${emotionCurrentEmotion}
+
+Alice's Current Emotion: ${emotionCurrentEmotion}.
 
 Below is context about the Human that Alice is currently speaking with:
 Human's Relationship to Alice: Friend
@@ -135,7 +136,7 @@ Human's Emotion: Excited
 Alice is having a conversation with the Human. Below is their current conversation:
 Current Conversation: "${memoryConversation}"
 
-Using the information and context from the Current Conversation, Alice will have a conversation with the human, responding to the Human's messages appropriatly.
+Using the information and Current Emotion, Alice will have a conversation with the human, responding to the Human's messages.
 
 Human: ${inputMessage}
 Alice:`
@@ -153,6 +154,7 @@ function generatePersonalityv2Prompt(userInput) {
   const humanRole = HumanRole;
   const personalityRules = Rules;
   const humanPersonality = HumanPersonality;
+  const emotionCurrentEmotion = CurrentEmotion;
 return `
 This is some information about an AI personality named Alice:
 "${personalityAsString}"
@@ -160,13 +162,12 @@ This is some information about an AI personality named Alice:
 Alice is having a conversation with a Human. Below is information about the Human:
 "${humanPersonality}"
 
-Here is the conversation Alice is in:
-"${memoryConversation}"
-
 Alice is required to follow these rules:
 "${personalityRules}"
 
-Have a conversation with the Human.
+Alice feels ${emotionCurrentEmotion}.
+
+Using the information, rules, emotion, and conversation, Have a conversation with the Human responding to the message below:
 
 Human: ${userInput}
 Alice: `

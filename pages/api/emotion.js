@@ -5,7 +5,7 @@ const configuration = new Configuration({
 });
 const openai = new OpenAIApi(configuration);
 
-export var CurrentEmotion = "Happy";
+export var CurrentEmotion = "Sad";
 
 
 export async function Emotion (req, res) {
