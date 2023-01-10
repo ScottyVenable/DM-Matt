@@ -5,6 +5,9 @@ import { Knowledge, Memories, Conversation, Relationships, OpinionOfHuman } from
 import { HumanEmotion, HumanInterests, HumanName, HumanPersonality, HumanRole } from "./human";
 import { Davinci, Babbage, Ada, Curie } from "./AI";
 
+
+
+
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
 });
@@ -13,6 +16,16 @@ var ConversationString;
 var RulesString;
 var PersonalityString;
 export var AliceResponse;
+
+var currentdate = new Date(); 
+var date = 
+                (currentdate.getMonth()+1)  + "/" 
+                + currentdate.getDate() + "/"
+                + currentdate.getFullYear();
+var time = 
+                currentdate.getHours() + ":"  
+                + currentdate.getMinutes() + ":" 
+                + currentdate.getSeconds();
 
 export default async function (req, res) {
   //Check if API Key is working
@@ -38,7 +51,6 @@ export default async function (req, res) {
 
 
   try {
-
 /*
   const response = await openai.createCompletion({
     model: "text-davinci-003",
@@ -50,7 +62,6 @@ export default async function (req, res) {
     stop: [" Human:", " AI:"],
   });
 */
-
 
     //Created AI Response
     const completion = await openai.createCompletion({
@@ -68,18 +79,36 @@ export default async function (req, res) {
     Conversation.push("Human: "+userInput+" \n");
     Conversation.push("Alice:" + completion.data.choices[0].text+" \n");
 
-
+    //Clear Console
     console.clear();
+
+    //Remove Conversation memory if bigger than 2 items.
     if (Conversation.length > 2) {
-      Conversation.splice(Conversation.length, 1); // 2nd parameter means remove one item only
+      Conversation.splice(Conversation.length - 1, 1); // 2nd parameter means remove one item only
     }
 
+    //Turn Conversation into a string.
     ConversationString = Conversation.join(" ")
     RulesString = Rules.join("\n")
     PersonalityString = Personality;
     //console.log(PersonalityString);
     //console.log(RulesString);
     console.log(ConversationString);
+
+    //Get Current Date
+    var currentdate = new Date(); 
+    var date = 
+                    (currentdate.getMonth()+1)  + "/" 
+                    + currentdate.getDate() + "/"
+                    + currentdate.getFullYear();
+    var time = 
+                    currentdate.getHours() + ":"  
+                    + currentdate.getMinutes() + ":" 
+                    + currentdate.getSeconds();
+
+    console.log(`
+    Date: ${date}
+    Time: ${time}`);
 
 
   }
@@ -117,6 +146,7 @@ function generatePersonalityPrompt(userInput) {
   const personalityFears = Fears;
   const memoryConversation = Conversation.toString;
   const memoryRelationships = Relationships;
+  const todaysDate = date;
 return `
 Below is some information about an AI personality named Alice:
 Alice's Personality Traits: ${personalityTraits}
@@ -125,19 +155,14 @@ Alice's Fears: ${personalityFears}
 Alice's Long Term Memory: ${memoryLongTerm}
 Alice's Knowledge: ${memoryKnowledge}
 Alice's Relationships: ${memoryRelationships}
-
+Todays Date: ${todaysDate}
 Alice's Current Emotion: ${emotionCurrentEmotion}.
 
-Below is context about the Human that Alice is currently speaking with:
-Human's Relationship to Alice: Friend
-Human's Name: Scotty Venable
-Human's Emotion: Excited
+Alice is having a conversation with a Human named ${HumanName}. Below is their current conversation:
 
-Alice is having a conversation with the Human. Below is their current conversation:
+Respond to the human, taking all the above information into account.
+
 Current Conversation: "${memoryConversation}"
-
-Using the information and Current Emotion, Alice will have a conversation with the human, responding to the Human's messages.
-
 Human: ${inputMessage}
 Alice:`
 
