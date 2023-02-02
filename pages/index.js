@@ -4,6 +4,8 @@ import styles from "./index.module.css";
 import { CurrentEmotion } from "./api/emotion";
 import { AliceResponse } from "./api/generate";
 
+
+
 export default function Home() {
   const [humanInput, setHumanInput] = useState("");
   const [result, setResult] = useState();
@@ -11,6 +13,7 @@ export default function Home() {
 
  // const [emotion, setEmotion] = useState();
  // const [humanMessage, setHumanMessage] = useState();
+
 
 
  function devConsole(devEvent) {
@@ -83,21 +86,14 @@ export default function Home() {
         <fieldset>
           <legend><b>A.L.I.C.E</b></legend>
 
-          <div class="typing">
-            <div class="bubble">
-              <div class="ellipsis one"></div>
-              <div class="ellipsis two"></div>
-              <div class="ellipsis three"></div>
-            </div>
-          </div>
           
           <div className={styles.result}>{result}</div>
         </fieldset>
 
+
         <fieldset>
         <legend><b>Data</b></legend>
           <data className={styles.data}>
-
             <fieldset>
               {CurrentEmotion}
             </fieldset>
