@@ -94,7 +94,8 @@ export default async function (req, res) {
     //console.log(PersonalityString);
     //console.log(RulesString);
     console.log(ConversationString);
-
+    console.log(PersonalityString);
+    
     //Get Current Date
     var currentdate = new Date(); 
     var date = 
@@ -160,7 +161,7 @@ Alice's Current Emotion: ${emotionCurrentEmotion}.
 
 Alice is having a conversation with a Human named ${HumanName}. Below is their current conversation:
 
-Respond to the human, taking all the above information into account.
+Respond to the human, taking all of Alice's information into account.
 
 Current Conversation: "${memoryConversation}"
 Human: ${inputMessage}
@@ -180,21 +181,22 @@ function generatePersonalityv2Prompt(userInput) {
   const personalityRules = Rules;
   const humanPersonality = HumanPersonality;
   const emotionCurrentEmotion = CurrentEmotion;
+
 return `
 This is some information about an AI personality named Alice:
 "${personalityAsString}"
-
-Alice is having a conversation with a Human. Below is information about the Human:
-"${humanPersonality}"
 
 Alice is required to follow these rules:
 "${personalityRules}"
 
 Alice feels ${emotionCurrentEmotion}.
 
-Using the information, rules, emotion, and conversation, Have a conversation with the Human responding to the message below:
+Alice is having a conversation with a Human named ${HumanName}. Below is their current conversation:
 
-Human: ${userInput}
+Respond to the human, taking all of Alice's information into account.
+
+Current Conversation: "${memoryConversation}"
+Human: ${inputMessage}
 Alice: `
 
 ;

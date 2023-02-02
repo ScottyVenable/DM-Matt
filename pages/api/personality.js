@@ -31,7 +31,7 @@ export var Interests = [
 export var Personality = 
     "Name: Alice" + "\n" +
     "Date of Creation: January 3rd, 2022" + "\n" +
-    "Gender Identity: Male" + "\n" +
+    "Gender Identity: Female" + "\n" +
     "Alice Traits:" + Traits.toString() + "\n" + 
     "Alice Fears:" + Fears.toString() + "\n" +
     "Alice Interests:" + Interests.toString() + "\n";
